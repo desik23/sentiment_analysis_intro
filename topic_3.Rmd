@@ -173,14 +173,14 @@ cloudseed_sent_counts <- cloudseed_text_words %>%
         group_by(date) %>%
         count(sentiment, sort = TRUE) %>%
         mutate(sentwords_per_day = sum(n)) %>%
-        mutate(pct_contribution = (n/sentwords_per_day))
+        mutate(pct_contribution = ((n/sentwords_per_day)*100))
 
 cloudseed_sent_counts %>%
   group_by(date) %>%
   ggplot(aes(date, pct_contribution, group=sentiment, color=sentiment))  +
   geom_smooth( method="lm", se=F)  +
   labs(x = "Date",
-       y = "Contribution to sentiment",
+       y = "Contribution to sentiment(%)",
        title = "Trendlines of % Contribution to Overall Sentiment")
 ```
 The concept of cloud seeding has always been very controversial. In recent years, it seems that the anticipation for the potential of the technology has stagnated.
