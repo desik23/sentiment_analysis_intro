@@ -61,14 +61,15 @@ sent_df %>%
   arrange(sentiment)
 
 sent_df_aggregate <- sent_df %>% 
-                      mutate(sentiment_class = case_when(sent_df$sentiment > 0 ~ 'Positive'
-                                                         ,sent_df$sentiment == 0 ~ 'Neutral'
-                                                      ,sent_df$sentiment < 0 ~ 'Negative')) %>% 
-                      group_by(Date, sentiment_class) %>% 
-                      summarize(count_sentiment=n())
+  mutate(sentiment_class = case_when(sent_df$sentiment > 0 ~ 'Positive'
+                                     ,sent_df$sentiment == 0 ~ 'Neutral'
+                                     ,sent_df$sentiment < 0 ~ 'Negative')) %>% 
+  group_by(Date, sentiment_class) %>% 
+  summarize(count_sentiment=n())
                       
 
 ```
+
 ### 0 Recreate Figure 1A from Froelich et al.
 
 ```{r}
@@ -128,6 +129,7 @@ cloudseed_dat3 <- cloudseed_dat3[!grepl("LINK TO", cloudseed_dat3$text,ignore.ca
 cloudseed_dat3 <- cloudseed_dat3[grepl("[a-zA-Z]", cloudseed_dat3$text),]
 
 ```
+
 ```{r}
 bing_sent <- get_sentiments('bing') #grab the bing sentiment lexicon from tidytext
 #head(bing_sent, n = 20)
@@ -139,7 +141,7 @@ bing_sent <- get_sentiments('bing') #grab the bing sentiment lexicon from tidyte
 cloudseed_text_words <- cloudseed_dat3  %>% 
   unnest_tokens(output = word, input = text, token = 'words')
  
-cloudseed_sent_words <- cloudseed_text_words%>% #break text into individual words
+cloudseed_sent_words <- cloudseed_text_words %>% #break text into individual words
   anti_join(stop_words, by = 'word') %>% #returns only the rows without stop words
   inner_join(bing_sent, by = 'word') #joins and retains only sentiment words
 ```
