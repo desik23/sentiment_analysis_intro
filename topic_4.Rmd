@@ -1,6 +1,10 @@
 ---
-title: "Lab 4: Sentiment Analysis II"
-author: Desik Somasundaram
+title: 'Lab 4: Sentiment Analysis II'
+author: "Desik Somasundaram"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -50,7 +54,7 @@ tweets <- tibble(text = dat$Title,
                  date = as.Date(dat$Date,'%m/%d/%y'))
 
 
-head(tweets$text, n = 10)
+#head(tweets$text, n = 10)
 
 #simple plot of tweets per day
 tweets %>%
@@ -153,14 +157,14 @@ quanteda has its own built in functions for cleaning text data. Let's take a loo
 
 ```{r create_corpus}
 corpus <- corpus(dat$Title) #enter quanteda
-summary(corpus)
+#summary(corpus)
 ```
 
 ```{r quanteda_cleaning}
 tokens <- tokens(corpus) #tokenize the text so each doc (page, in this case) is a list of tokens (words)
 
 #examine the uncleaned version
-tokens
+#tokens
 
 #clean it up
 tokens <- tokens(tokens, remove_punct = TRUE,
@@ -177,9 +181,9 @@ tokens <- tokens_tolower(tokens)
 We can use the kwic function (keywords-in-context) to briefly examine the context in which certain words or patterns appear.
 
 ```{r initial_analysis}
-head(kwic(tokens, pattern = "climate", window = 3))
+#head(kwic(tokens, pattern = "climate", window = 3))
 
-head(kwic(tokens, pattern = phrase("climate change"), window = 3))
+#head(kwic(tokens, pattern = phrase("climate change"), window = 3))
 
 
 ```
@@ -211,11 +215,11 @@ Create the sparse matrix representation known as the document-feature matrix. qu
 
 dfm <- dfm(tokens)
 
-topfeatures(dfm, 12)
+#topfeatures(dfm, 12)
 
 dfm.sentiment <- dfm_lookup(dfm, dictionary = data_dictionary_LSD2015)
 
-head(textstat_polarity(tokens, data_dictionary_LSD2015, fun = sent_logit))
+#head(textstat_polarity(tokens, data_dictionary_LSD2015, fun = sent_logit))
 
 
 ```
